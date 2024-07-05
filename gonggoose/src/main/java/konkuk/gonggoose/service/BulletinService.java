@@ -13,6 +13,7 @@ public class BulletinService {
     private final BulletinDAO bulletinDAO;
 
     public long createBulletin(BulletinPostRequest request) {
+        log.info("BulletinService::createBulletin()");
         return bulletinDAO.createBulletin(request);
     }
 }

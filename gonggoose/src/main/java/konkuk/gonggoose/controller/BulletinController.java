@@ -20,15 +20,15 @@ public class BulletinController {
     private final BulletinService bulletinService;
     private final BulletinImageService bulletinImageService;
     @PostMapping
-    public BaseResponse<BulletinPostResponse> postBulletin(@RequestPart List<MultipartFile> images, @RequestPart BulletinPostRequest request){
+    public BaseResponse<BulletinPostResponse> postBulletin(@RequestPart(required = false) List<MultipartFile> images, @RequestPart BulletinPostRequest request){
         log.info("BulletinController::postBulletin()");
         log.info("request=" + request);
         Long bulletinId = bulletinService.createBulletin(request);
-        bulletinImageService.saveImages(bulletinId, images);
+        if(!images.isEmpty()){
+            bulletinImageService.saveImages(bulletinId, images);
+        }
         return new BaseResponse<>(new BulletinPostResponse(bulletinId));
     }
-
-
 }
 
 

@@ -20,7 +20,7 @@ public class BulletinImageDao {
     NamedParameterJdbcTemplate jdbcTemplate;
 
     public BulletinImageDao(DataSource dataSource) {
-        this.jdbcTemplate = jdbcTemplate;
+        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     public long save(BulletinImageDto dto) {
