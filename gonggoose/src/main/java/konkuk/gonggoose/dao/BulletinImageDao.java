@@ -1,6 +1,6 @@
 package konkuk.gonggoose.dao;
 
-import konkuk.gonggoose.common.dto.BulletinImageDto;
+import konkuk.gonggoose.common.dto.BulletinImageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,7 +23,7 @@ public class BulletinImageDao {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public long save(BulletinImageDto dto) {
+    public long save(BulletinImageDTO dto) {
         String sql = "insert into bulletin_image(image_url, bulletin_id) values(:imageUrl, :bulletinId)";
         SqlParameterSource param = new BeanPropertySqlParameterSource(dto);
         KeyHolder keyHolder = new GeneratedKeyHolder();

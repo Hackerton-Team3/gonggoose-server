@@ -1,5 +1,6 @@
 package konkuk.gonggoose.dao;
 
+import konkuk.gonggoose.common.dto.BulletinGetDTO;
 import konkuk.gonggoose.common.dto.BulletinPostRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -10,6 +11,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Slf4j
@@ -31,6 +34,13 @@ public class BulletinDAO {
 
     public void deleteBulletin(Long bulletinId) {
         String sql = "delete from bulletin where bulletin_id = :bulletinId";
+        Map<String, Long> param = Map.of("bulletinId", bulletinId);
+        jdbcTemplate.update(sql, param);
+    }
 
+    public List<BulletinGetDTO> getBulletinListByKeyword(String keyword) {
+        String sql = "SELECT FROM bulletin WHERE title LIKE '%keyword%'";
+
+        return null;
     }
 }

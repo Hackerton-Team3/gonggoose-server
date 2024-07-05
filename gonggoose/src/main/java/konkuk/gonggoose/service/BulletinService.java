@@ -1,10 +1,13 @@
 package konkuk.gonggoose.service;
 
+import konkuk.gonggoose.common.dto.BulletinGetDTO;
 import konkuk.gonggoose.dao.BulletinDAO;
 import konkuk.gonggoose.common.dto.BulletinPostRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -20,5 +23,10 @@ public class BulletinService {
     public void deleteBulletin(Long bulletinId) {
         log.info("BulletinService::deleteBulletin()");
         bulletinDAO.deleteBulletin(bulletinId);
+    }
+
+    public List<BulletinGetDTO> getBulletinListByKeyword(String keyword) {
+        bulletinDAO.getBulletinListByKeyword(keyword);
+        return null;
     }
 }
