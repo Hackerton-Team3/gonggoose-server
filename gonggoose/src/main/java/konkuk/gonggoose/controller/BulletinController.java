@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 import static konkuk.gonggoose.common.response.status.BaseExceptionResponseStatus.BAD_REQUEST_PARAM;
 
@@ -43,7 +44,8 @@ public class BulletinController {
         if(images != null){
             thumbnailUrl = bulletinImageService.saveImages(bulletinId, images);
         }
-        eventPublisher.publish(new ChatRoomCreateEvent(this, thumbnailUrl, request.getTitle(), bulletinId));
+
+        eventPublisher.publish(new ChatRoomCreateEvent(request.getWriter_id(), thumbnailUrl, request.getTitle(), bulletinId, UUID.randomUUID().toString()));
         return new BaseResponse<>(new BulletinPostResponse(bulletinId));
     }
 
