@@ -15,6 +15,6 @@ public class ChatRoomEventHandler {
     @Async
     @EventListener
     public void handleCreateChatRoom(ChatRoomCreateEvent event) {
-        chattingService.createChatRoom(event.);
+        chattingService.createChatRoom(event.getUserId(), event.getBulletinId(), event.getTitle(), event.getImageUrl(), event.getChattingRoomTopicId());
     }
 }
