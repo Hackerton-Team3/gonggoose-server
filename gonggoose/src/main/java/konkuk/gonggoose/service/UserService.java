@@ -25,7 +25,7 @@ public class UserService {
         return userDao.signup(signupRequest);
     }
 
-    public void updateImageUrl(PatchImageUrlRequest patchImageUrlRequest) {
-        userDao.updateImageUrl(patchImageUrlRequest);
+    public void updateImageUrl(PatchImageUrlRequest patchImageUrlRequest, long userId) {
+        userDao.updateImageUrl(patchImageUrlRequest, userId);
     }
 }

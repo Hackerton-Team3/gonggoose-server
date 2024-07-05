@@ -48,12 +48,12 @@ public class UserDao {
         return Objects.requireNonNull(keyHolder.getKey()).longValue();
     }
 
-    public void updateImageUrl(PatchImageUrlRequest patchImageUrlRequest) {
+    public void updateImageUrl(PatchImageUrlRequest patchImageUrlRequest, long userId) {
         log.info("[UserDao.updateImageUrl]");
-        String sql = "update user set image_url=:image_url where token=:token";
+        String sql = "update user set image_url=:image_url where user_id=:user_id";
         Map<String, Object> param = Map.of(
                 "image_url", patchImageUrlRequest.getImageUrl(),
-                "token", patchImageUrlRequest.getAccessToken());
+                "user_id", userId);
         jdbcTemplate.update(sql, param);
     }
 }
