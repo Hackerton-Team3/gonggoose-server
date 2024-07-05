@@ -51,6 +51,5 @@ public class ChattingController {
         BaseResponse<ChattingRoomDetailResponse> responseData = new BaseResponse<>(data);
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
-
-    @GetMapping
+    
 }
