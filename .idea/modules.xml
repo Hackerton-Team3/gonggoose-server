@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/gonggoose-server.iml" filepath="$PROJECT_DIR$/.idea/gonggoose-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gonggoose.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gonggoose.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gonggoose.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gonggoose.test.iml" />
     </modules>
   </component>
 </project>

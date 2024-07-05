@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping("/{kakaoId}")
     public ResponseStatus isExistedUser(@PathVariable long kakaoId) {
-        log.info("[UserController.isExistedUser");
+        log.info("[UserController.isExistedUser]");
 
         if (userService.isExistedUser(kakaoId)) {
             return new BaseResponse<>(null);
@@ -28,12 +28,13 @@ public class UserController {
         return new BaseErrorResponse(BaseExceptionResponseStatus.USER_NOT_FOUND, "사용자가 존재하지 않습니다.");
     }
 
-    @PostMapping("/")
-    public BaseResponse<String> signup(@RequestBody SignupRequest signupRequest) {
-        log.info("[UserController.signup");
+    @PostMapping("")
+    public ResponseStatus signup(@RequestBody SignupRequest signupRequest) {
+        log.info("[UserController.signup]");
 
-        userService.signup(signupRequest);
-
-        return new BaseResponse<>(null);
+        if (userService.signup(signupRequest)) {
+            return new BaseResponse<>(null);
+        }
+        return new BaseErrorResponse(BaseExceptionResponseStatus.DUPLICATE_KAKAO_ID, "이미 존재하는 카카오 ID입니다.");
     }
 }
