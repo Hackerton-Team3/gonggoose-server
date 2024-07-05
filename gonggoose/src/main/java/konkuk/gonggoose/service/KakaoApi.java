@@ -121,8 +121,10 @@ public class KakaoApi {
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+            String id = element.getAsJsonObject().get("id").getAsString();
 
             userInfo.put("nickname", nickname);
+            userInfo.put("id", id);
 
             br.close();
 

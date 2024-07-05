@@ -28,10 +28,13 @@ public class LoginController {
 
         // 3. 사용자 정보 받기
         Map<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
+        log.info(userInfo.toString());
 
         String nickname = (String)userInfo.get("nickname");
+        String id = (String)userInfo.get("id");
 
         System.out.println("nickname = " + nickname);
+        System.out.println("id = " + id);
         System.out.println("accessToken = " + accessToken);
 
         return "redirect:/login";
