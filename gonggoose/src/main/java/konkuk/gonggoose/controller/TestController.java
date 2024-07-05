@@ -1,6 +1,6 @@
 package konkuk.gonggoose.controller;
 
-import konkuk.gonggoose.service.KakaoApi;
+import konkuk.gonggoose.api.KakaoApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

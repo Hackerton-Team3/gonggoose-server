@@ -1,4 +1,4 @@
-package konkuk.gonggoose.service;
+package konkuk.gonggoose.api;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
