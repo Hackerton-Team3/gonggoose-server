@@ -1,7 +1,7 @@
 package konkuk.gonggoose.service;
 
 import konkuk.gonggoose.dao.BulletinImageDao;
-import konkuk.gonggoose.dto.BulletinImageDto;
+import konkuk.gonggoose.common.dto.BulletinImageDto;
 import konkuk.gonggoose.utils.ImageUploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,5 +25,9 @@ public class BulletinImageService {
                     .bulletinId(bulletinId)
                     .build());
         }
+    }
+
+    public void deleteImages(Long bulletinId) {
+        bulletinImageDao.deleteImagesByBulletinId(bulletinId);
     }
 }

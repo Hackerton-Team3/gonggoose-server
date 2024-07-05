@@ -1,8 +1,7 @@
 package konkuk.gonggoose.dao;
 
-import konkuk.gonggoose.dto.BulletinPostRequest;
+import konkuk.gonggoose.common.dto.BulletinPostRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -28,5 +27,10 @@ public class BulletinDAO {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(sql, param, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).longValue();
+    }
+
+    public void deleteBulletin(Long bulletinId) {
+        String sql = "delete from bulletin where bulletin_id = :bulletinId";
+
     }
 }

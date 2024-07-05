@@ -1,6 +1,6 @@
 package konkuk.gonggoose.dao;
 
-import konkuk.gonggoose.dto.BulletinImageDto;
+import konkuk.gonggoose.common.dto.BulletinImageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -29,5 +29,11 @@ public class BulletinImageDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(sql, param, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).longValue();
+    }
+
+    public void deleteImagesByBulletinId(Long bulletinId) {
+        String sql = "delete from bulletin_image where bulletin_id = :bulletinId";
+        Map<String, Long> param = Map.of("bulletinid", bulletinId);
+        jdbcTemplate.update(sql, param);
     }
 }
