@@ -27,6 +27,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     BAD_SQL_GRAMMAR(3002, HttpStatus.INTERNAL_SERVER_ERROR.value(), "SQL에 오류가 있습니다."),
     IMAGE_UPLOAD_FAILED(3003, HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버에 이미지를 저장하는데 실패했습니다."),
 
+    IMAGE_NOT_FOUND(3004, HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버에서 이미지를 찾을 수 없습니다."),
 
     /**
      * 4000: Authorization 오류

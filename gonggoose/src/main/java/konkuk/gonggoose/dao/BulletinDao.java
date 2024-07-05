@@ -21,8 +21,6 @@ import java.util.Objects;
 @Slf4j
 @Repository
 public class BulletinDao {
-    @Value("${bulletin.image.path}")
-    private String imagePath;
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     public BulletinDao(DataSource dataSource) {
@@ -61,7 +59,7 @@ public class BulletinDao {
             dto.setStatus(resultSet.getString("status"));
             dto.setMax_user_number(Long.parseLong(resultSet.getString("max_user_number")));
             dto.setCurrent_user_number(Long.parseLong(resultSet.getString("current_user_count")));
-            dto.setImage_url(resultSet.getString(imagePath + "image_url"));
+            dto.setImage_url(resultSet.getString( "image_url"));
             return dto;
         });
     }
