@@ -77,6 +77,11 @@ public class BulletinController {
         return new BaseResponse<>(bulletinService.getBulletinListByKeyword(keyword));
     }
 
+    @GetMapping("{bulletinId}")
+    public BaseResponse<BulletinGetDto> getBulletin(@PathVariable Long bulletinId){
+        return new BaseResponse<>(bulletinService.getBulletin(bulletinId));
+    }
+
     @GetMapping(value = "/images/{fileName}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable("fileName") String fileName) throws IOException {
         String path = imagePath + fileName;

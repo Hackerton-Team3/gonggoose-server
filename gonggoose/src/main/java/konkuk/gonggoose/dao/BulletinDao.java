@@ -71,4 +71,26 @@ public class BulletinDao {
         jdbcTemplate.update(sql, param, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).longValue();
     }
+
+    public BulletinGetDto getBulletin(Long bulletinId) {
+        String sql = "SELECT b.bulletin_id, b.title, b.status, b.max_user_number,\n" +
+                "       (SELECT COUNT(*)\n" +
+                "        FROM user_bulletin\n" +
+                "        WHERE bulletin_id = b.bulletin_id) AS current_user_count,\n" +
+                "        (SELECT image_url\n" +
+                "        FROM bulletin_image\n" +
+                "        WHERE bulletin_id = b.bulletin_id\n" +
+                "        LIMIT 1) AS image_url FROM bulletin as b WHERE b.bulletin_id = :bulletinId";
+        Map<String, Long> param = Map.of("bulletinId", bulletinId);
+        return jdbcTemplate.queryForObject(sql, param, (resultSet, rowNum) ->{
+            BulletinGetDto dto = new BulletinGetDto();
+            dto.setBulletin_id(Long.parseLong(resultSet.getString("bulletin_id")));
+            dto.setTitle(resultSet.getString("title"));
+            dto.setStatus(resultSet.getString("status"));
+            dto.setMax_user_number(Long.parseLong(resultSet.getString("max_user_number")));
+            dto.setCurrent_user_number(Long.parseLong(resultSet.getString("current_user_count")));
+            dto.setImage_url(resultSet.getString( "image_url"));
+            return dto;
+        });
+    }
 }
