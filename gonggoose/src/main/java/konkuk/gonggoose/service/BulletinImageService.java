@@ -28,6 +28,7 @@ public class BulletinImageService {
     }
 
     public void deleteImages(Long bulletinId) {
+        log.info("BulletinImageService:deleteImages()");
         bulletinImageDao.deleteImagesByBulletinId(bulletinId);
     }
 }

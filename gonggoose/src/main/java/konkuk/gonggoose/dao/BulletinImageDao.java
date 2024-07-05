@@ -33,7 +33,7 @@ public class BulletinImageDao {
 
     public void deleteImagesByBulletinId(Long bulletinId) {
         String sql = "delete from bulletin_image where bulletin_id = :bulletinId";
-        Map<String, Long> param = Map.of("bulletinid", bulletinId);
+        Map<String, Long> param = Map.of("bulletinId", bulletinId);
         jdbcTemplate.update(sql, param);
     }
 }
