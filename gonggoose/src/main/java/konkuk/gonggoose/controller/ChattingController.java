@@ -2,6 +2,7 @@ package konkuk.gonggoose.controller;
 
 import konkuk.gonggoose.common.dto.ChattingMessageDto;
 import konkuk.gonggoose.common.dto.ChattingMessageResponse;
+import konkuk.gonggoose.common.dto.ChattingRoomListResponse;
 import konkuk.gonggoose.common.response.BaseResponse;
 import konkuk.gonggoose.service.ChattingService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,10 @@ public class ChattingController {
     }
 
     @GetMapping("/users/{userId}/chattingRooms")
-    public void chattingRoomList(@PathVariable Long userId){
-        chattingService.getChattingRoomList();
+    public ResponseEntity<BaseResponse> chattingRoomList(@PathVariable Long userId){
+        ChattingRoomListResponse data = chattingService.getChattingRoomList(userId);
+
+        BaseResponse<ChattingRoomListResponse> responseData = new BaseResponse<>(data);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 }
