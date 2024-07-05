@@ -1,4 +1,4 @@
-package konkuk.gonggoose;
+package konkuk.gonggoose.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
