@@ -55,7 +55,6 @@ public class BulletinController {
             thumbnailUrl = bulletinImageService.saveImages(bulletinId, images);
         }
 
-
         String uuid = UUID.randomUUID().toString();
         eventPublisher.publish(new ChatRoomCreateEvent(request.getWriter_id(), thumbnailUrl, request.getTitle(), bulletinId, uuid));
         return new BaseResponse<>(new BulletinPostResponse(bulletinId, uuid));
