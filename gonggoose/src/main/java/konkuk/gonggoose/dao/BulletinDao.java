@@ -4,6 +4,7 @@ import konkuk.gonggoose.common.dto.BulletinGetDto;
 import konkuk.gonggoose.common.dto.BulletinPostRequest;
 import konkuk.gonggoose.common.dto.UserBulletinDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -20,7 +21,9 @@ import java.util.Objects;
 @Slf4j
 @Repository
 public class BulletinDao {
-    NamedParameterJdbcTemplate jdbcTemplate;
+    @Value("${bulletin.image.path}")
+    private String imagePath;
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
     public BulletinDao(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
@@ -58,7 +61,7 @@ public class BulletinDao {
             dto.setStatus(resultSet.getString("status"));
             dto.setMax_user_number(Long.parseLong(resultSet.getString("max_user_number")));
             dto.setCurrent_user_number(Long.parseLong(resultSet.getString("current_user_count")));
-            dto.setImage_url(resultSet.getString("image_url"));
+            dto.setImage_url(resultSet.getString(imagePath + "image_url"));
             return dto;
         });
     }

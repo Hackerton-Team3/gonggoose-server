@@ -45,8 +45,10 @@ public class BulletinController {
             thumbnailUrl = bulletinImageService.saveImages(bulletinId, images);
         }
 
-        eventPublisher.publish(new ChatRoomCreateEvent(request.getWriter_id(), thumbnailUrl, request.getTitle(), bulletinId, UUID.randomUUID().toString()));
-        return new BaseResponse<>(new BulletinPostResponse(bulletinId));
+
+        String uuid = UUID.randomUUID().toString();
+        eventPublisher.publish(new ChatRoomCreateEvent(request.getWriter_id(), thumbnailUrl, request.getTitle(), bulletinId, uuid));
+        return new BaseResponse<>(new BulletinPostResponse(bulletinId, uuid));
     }
 
     @DeleteMapping("/{bulletinId}")
@@ -64,7 +66,6 @@ public class BulletinController {
 
         return new BaseResponse<>(bulletinService.getBulletinListByKeyword(keyword));
     }
-
 }
 
 
