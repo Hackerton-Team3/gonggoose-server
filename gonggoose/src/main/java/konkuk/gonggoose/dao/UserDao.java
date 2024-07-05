@@ -1,5 +1,6 @@
 package konkuk.gonggoose.dao;
 
+import konkuk.gonggoose.dto.PatchImageUrlRequest;
 import konkuk.gonggoose.dto.SignupRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -45,5 +46,15 @@ public class UserDao {
         jdbcTemplate.update(sql, param, keyHolder);
 
         return true;
+    }
+
+
+    public void updateImageUrl(PatchImageUrlRequest patchImageUrlRequest) {
+        log.info("[UserDao.updateImageUrl]");
+        String sql = "update user set image_url=:image_url where token=:token";
+        Map<String, Object> param = Map.of(
+                "image_url", patchImageUrlRequest.getImageUrl(),
+                "token", patchImageUrlRequest.getAccessToken());
+        jdbcTemplate.update(sql, param);
     }
 }
