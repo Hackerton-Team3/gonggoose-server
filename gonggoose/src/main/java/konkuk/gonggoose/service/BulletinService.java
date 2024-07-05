@@ -34,4 +34,10 @@ public class BulletinService {
         log.info("BulletinService::getBulletinListByKeyword()");
         return bulletinDAO.getBulletinListByKeyword(keyword);
     }
+
+    public BulletinGetDto getBulletin(Long bulletinId) {
+        log.info("BulletinService::getBulletin()");
+
+        return bulletinDAO.getBulletin(bulletinId);
+    }
 }
