@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +28,9 @@ public class UserController {
     public ResponseStatus isExistedUser(@PathVariable long kakaoId) {
         log.info("[UserController.isExistedUser]");
 
-        if (userService.isExistedUser(kakaoId)) {
-            return new BaseResponse<>(null);
+        List<SignupResponse> findResult = userService.isExistedUser(kakaoId);
+        if (findResult != null) {
+            return new BaseResponse<>(findResult);
         }
         return new BaseErrorResponse(BaseExceptionResponseStatus.USER_NOT_FOUND, "사용자가 존재하지 않습니다.");
     }
@@ -51,4 +54,6 @@ public class UserController {
 
         return new BaseResponse<>(null);
     }
+
+
 }
