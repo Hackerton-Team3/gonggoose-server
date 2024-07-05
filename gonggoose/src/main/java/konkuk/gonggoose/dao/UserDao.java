@@ -2,6 +2,7 @@ package konkuk.gonggoose.dao;
 
 import konkuk.gonggoose.dto.PatchImageUrlRequest;
 import konkuk.gonggoose.dto.SignupRequest;
+import konkuk.gonggoose.dto.SignupResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,17 +26,25 @@ public class UserDao {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public boolean isExistedUser(long kakaoId) {
+    public List<SignupResponse> isExistedUser(long kakaoId) {
         log.info("[UserDao.isExistedUser]");
         String sql = "select exists(select kakao_id from user where kakao_id=:kakao_id)";
         Map<String, Object> param = Map.of("kakao_id", kakaoId);
-        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, param, boolean.class));
+
+        if (Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, param, boolean.class))) {
+            sql = "select user_id from user where kakao_id=:kakao_id";
+            return jdbcTemplate.query(sql, param,
+                    (rs, rowNum) -> new SignupResponse(
+                            rs.getLong("user_id"))
+            );
+        }
+        return null;
     }
 
     public long signup(SignupRequest signupRequest) {
         log.info("[UserDao.signup]");
 
-        if (isExistedUser(Long.parseLong(signupRequest.getKakaoId()))) {
+        if (isExistedUser(Long.parseLong(signupRequest.getKakaoId())) == null) {
             return -1;
         }
 
