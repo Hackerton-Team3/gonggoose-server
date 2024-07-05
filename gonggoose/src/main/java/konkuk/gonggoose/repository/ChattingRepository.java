@@ -41,6 +41,12 @@ public class ChattingRepository {
         return jdbcTemplate.queryForObject(sql, param, chattingMessageRowMapper());
     }
 
+    public void findChattingRoomsByUserId(){
+        String sql = "select chatting_room_id as id, title, description, bulletin_id from chatting_Room" +
+                " where chatting_room_id in (select chatting_room_id from user_chatting_room where user_id = :userId)";
+
+    }
+
     private RowMapper<ChattingMessage> chattingMessageRowMapper(){
         return BeanPropertyRowMapper.newInstance(ChattingMessage.class);
     }

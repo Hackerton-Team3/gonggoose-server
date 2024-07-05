@@ -15,6 +15,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
@@ -31,5 +32,10 @@ public class ChattingController {
                                                   @Payload ChattingMessageDto chattingMessageDto){
         ChattingMessageResponse responseData = chattingService.receiveMessage(userId, chattingRoomId, chattingMessageDto);
         return responseData;
+    }
+
+    @GetMapping("/users/{userId}/chattingRooms")
+    public void chattingRoomList(@PathVariable Long userId){
+        chattingService.getChattingRoomList();
     }
 }
