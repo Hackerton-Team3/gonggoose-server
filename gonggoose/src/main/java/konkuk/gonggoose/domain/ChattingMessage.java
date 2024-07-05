@@ -7,8 +7,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChattingMessage {
     private Long id;
