@@ -43,11 +43,11 @@ public class UserController {
         return new BaseErrorResponse(BaseExceptionResponseStatus.DUPLICATE_KAKAO_ID, "이미 존재하는 카카오 ID입니다.");
     }
 
-    @PatchMapping("/image")
-    public BaseResponse<String> updateImageUrl(@RequestBody PatchImageUrlRequest patchImageUrlRequest) {
+    @PatchMapping("/{userId}/image")
+    public BaseResponse<String> updateImageUrl(@RequestBody PatchImageUrlRequest patchImageUrlRequest, @PathVariable long userId) {
         log.info("[UserController.updatePhoneNumber]");
 
-        userService.updateImageUrl(patchImageUrlRequest);
+        userService.updateImageUrl(patchImageUrlRequest, userId);
 
         return new BaseResponse<>(null);
     }

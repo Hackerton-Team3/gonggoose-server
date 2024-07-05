@@ -9,5 +9,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PatchImageUrlRequest {
     private String imageUrl;
-    private String accessToken;
 }
