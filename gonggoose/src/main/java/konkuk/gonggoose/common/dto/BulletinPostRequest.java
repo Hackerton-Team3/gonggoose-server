@@ -19,7 +19,7 @@ public class BulletinPostRequest{
     private String deadline;
     private Long writer_id;
     private String title;
-    private Integer max_user_number;
-    private Integer expected_price;
+    private Long max_user_number;
+    private Long expected_price;
     private String content;
 }
