@@ -63,4 +63,9 @@ public class ChattingService {
         return data;
     }
 
+    //==이벤트 메서드==
+    public void createChatRoom(){
+
+    }
+
 }

@@ -42,6 +42,7 @@ public class BulletinController {
         if(images != null){
             thumbnailUrl = bulletinImageService.saveImages(bulletinId, images);
         }
+
         eventPublisher.publish(new ChatRoomCreateEvent(this, thumbnailUrl, request.getTitle(), bulletinId));
 
         return new BaseResponse<>(new BulletinPostResponse(bulletinId));
