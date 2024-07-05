@@ -1,6 +1,7 @@
 package konkuk.gonggoose.controller;
 
-import konkuk.gonggoose.common.dto.ChatRoomCreateEventDTO;
+import konkuk.gonggoose.common.dto.BulletinGetDto;
+import konkuk.gonggoose.common.dto.UserBulletinDto;
 import konkuk.gonggoose.common.event.ChatRoomCreateEvent;
 import konkuk.gonggoose.common.exception.BadRequestException;
 import konkuk.gonggoose.common.response.BaseResponse;
@@ -36,28 +37,30 @@ public class BulletinController {
             throw new BadRequestException(BAD_REQUEST_PARAM);
         }
 
-        Long bulletinId;
-        bulletinId = bulletinService.createBulletin(request);
+        Long bulletinId = bulletinService.createBulletin(request);
+        bulletinService.createUserBulletin(new UserBulletinDto(request.getWriter_id(), bulletinId));
         String thumbnailUrl = null;
         if(images != null){
             thumbnailUrl = bulletinImageService.saveImages(bulletinId, images);
         }
         eventPublisher.publish(new ChatRoomCreateEvent(this, thumbnailUrl, request.getTitle(), bulletinId));
-
         return new BaseResponse<>(new BulletinPostResponse(bulletinId));
     }
 
     @DeleteMapping("/{bulletinId}")
     public BaseResponse<Object> deleteBulletin(@PathVariable Long bulletinId){
+        log.info("BulletinController::deleteBulletin()");
+
         bulletinImageService.deleteImages(bulletinId);
         bulletinService.deleteBulletin(bulletinId);
         return new BaseResponse<>(null);
     }
 
     @GetMapping
-    public BaseResponse<Object> getBulletinList(@RequestParam(defaultValue = "") String keyword){
-        bulletinService.getBulletinListByKeyword(keyword);
-        return new BaseResponse<>(null);
+    public BaseResponse<List<BulletinGetDto>> getBulletinList(@RequestParam String keyword){
+        log.info("BulletinController::getBulletinList()");
+
+        return new BaseResponse<>(bulletinService.getBulletinListByKeyword(keyword));
     }
 
 }

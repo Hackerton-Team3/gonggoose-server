@@ -1,11 +1,10 @@
 package konkuk.gonggoose.service;
 
 import konkuk.gonggoose.dao.BulletinImageDao;
-import konkuk.gonggoose.common.dto.BulletinImageDTO;
+import konkuk.gonggoose.common.dto.BulletinImageDto;
 import konkuk.gonggoose.utils.ImageUploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +24,7 @@ public class BulletinImageService {
             if(i == 0){
                 returnUrl = imageUrl;
             }
-            bulletinImageDao.save(BulletinImageDTO.builder()
+            bulletinImageDao.save(BulletinImageDto.builder()
                     .imageUrl(imageUrl)
                     .bulletinId(bulletinId)
                     .build());

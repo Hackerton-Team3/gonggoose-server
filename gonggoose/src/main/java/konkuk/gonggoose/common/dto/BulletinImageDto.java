@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
-public class ChatRoomCreateEventDTO {
-    private String thumbnailUrl;
-    private String title;
+public class BulletinImageDto {
+    private String imageUrl;
     private Long bulletinId;
 }
+
