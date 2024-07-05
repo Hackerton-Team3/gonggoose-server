@@ -31,23 +31,22 @@ public class UserDao {
         return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, param, boolean.class));
     }
 
-    public boolean signup(SignupRequest signupRequest) {
+    public long signup(SignupRequest signupRequest) {
         log.info("[UserDao.signup]");
 
         if (isExistedUser(Long.parseLong(signupRequest.getKakaoId()))) {
-            return false;
+            return -1;
         }
 
-        String sql = "insert into user(kakao_id, nickname, image_url, school_name, school_email, token)" +
-                "values(:kakaoId, :nickname, :imageUrl, :schoolName, :schoolEmail, :accessToken)";
+        String sql = "insert into user(kakao_id, nickname, image_url, school_name, school_email)" +
+                "values(:kakaoId, :nickname, :imageUrl, :schoolName, :schoolEmail)";
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(signupRequest);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(sql, param, keyHolder);
 
-        return true;
+        return Objects.requireNonNull(keyHolder.getKey()).longValue();
     }
-
 
     public void updateImageUrl(PatchImageUrlRequest patchImageUrlRequest) {
         log.info("[UserDao.updateImageUrl]");

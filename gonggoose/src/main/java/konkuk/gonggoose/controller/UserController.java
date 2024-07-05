@@ -6,6 +6,7 @@ import konkuk.gonggoose.common.response.status.BaseExceptionResponseStatus;
 import konkuk.gonggoose.common.response.status.ResponseStatus;
 import konkuk.gonggoose.dto.PatchImageUrlRequest;
 import konkuk.gonggoose.dto.SignupRequest;
+import konkuk.gonggoose.dto.SignupResponse;
 import konkuk.gonggoose.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +36,9 @@ public class UserController {
     public ResponseStatus signup(@RequestBody SignupRequest signupRequest) {
         log.info("[UserController.signup]");
 
-        if (userService.signup(signupRequest)) {
-            return new BaseResponse<>(null);
+        long signupResult = userService.signup(signupRequest);
+        if (signupResult != -1) {
+            return new BaseResponse<>(new SignupResponse(signupResult));
         }
         return new BaseErrorResponse(BaseExceptionResponseStatus.DUPLICATE_KAKAO_ID, "이미 존재하는 카카오 ID입니다.");
     }
