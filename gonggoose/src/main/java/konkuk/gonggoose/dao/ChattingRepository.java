@@ -74,6 +74,14 @@ public class ChattingRepository {
         return jdbcTemplate.query(sql, param, chattingRoomRowMapper());
     }
 
+    public ChattingRoom findChattingRoomsByBulletinId(Long bulletinId){
+        String sql = "select * from chatting_room where bulletin_id = :bulletinId";
+
+        Map<String, Long> param = Map.of("bulletinId", bulletinId);
+
+        return jdbcTemplate.queryForObject(sql, param, chattingRoomRowMapper());
+    }
+
     public List<ChattingMessage> findLastMessagesInChattingRooms(List<Long> chattingRoomIds){
         String sql = "SELECT * FROM chatting_message cm " +
                 "INNER JOIN (" +

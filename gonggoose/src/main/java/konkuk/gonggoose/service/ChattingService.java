@@ -1,6 +1,7 @@
 package konkuk.gonggoose.service;
 
 import konkuk.gonggoose.common.dto.*;
+import konkuk.gonggoose.dao.UserDao;
 import konkuk.gonggoose.domain.ChattingMessage;
 import konkuk.gonggoose.dao.ChattingRepository;
 import konkuk.gonggoose.domain.ChattingRoom;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class ChattingService {
 
     private final ChattingRepository chattingRepository;
+    private final UserDao userDao;
 
     @Transactional
     public ChattingMessageResponse receiveMessage(Long userId, Long chattingRoomId, ChattingMessageDto chattingMessageDto) {
@@ -28,9 +30,11 @@ public class ChattingService {
 
         Long id = chattingRepository.save(chattingMessage);
         ChattingMessage findMessage = chattingRepository.findChattingMessageById(id);
-        //TODO 작성 유저 조회
 
-        return ChattingMessageResponse.create(findMessage);
+        String nickName = userDao.findNickNameById(userId);
+
+
+        return ChattingMessageResponse.create(userId, nickName, findMessage);
     }
 
     public ChattingRoomListResponse getChattingRoomList(Long userId){
@@ -61,10 +65,19 @@ public class ChattingService {
 
         List<ChattingMessageResponse> messageDatas = new ArrayList<>();
         for (ChattingMessage chattingMessage : chattingMessageList) {
-            messageDatas.add(ChattingMessageResponse.create(chattingMessage));
+            String nickName = userDao.findNickNameById(chattingMessage.getUserId());
+            messageDatas.add(ChattingMessageResponse.create(userId, nickName, chattingMessage));
         }
 
         return ChattingRoomDetailResponse.create(chattingRoom, messageDatas);
+    }
+
+    public ChattingRoomTopicIdDto enterChattingRoom(Long userId, Long bulletinId){
+        ChattingRoom chattingRooms = chattingRepository.findChattingRoomsByBulletinId(bulletinId);
+
+        UserChattingRoom userChattingRoom = UserChattingRoom.create(userId, chattingRooms.getId());
+        chattingRepository.save(userChattingRoom);
+        return new ChattingRoomTopicIdDto(chattingRooms.getChattingRoomTopicId());
     }
 
     public List<ChattingRoomListEachResponse> createChattingRoomListMessage(List<ChattingRoom> chattingRooms, Map<Long, String> lastMessageOfChattingRoomMap){

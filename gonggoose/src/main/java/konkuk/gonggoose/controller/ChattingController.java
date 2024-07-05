@@ -1,9 +1,6 @@
 package konkuk.gonggoose.controller;
 
-import konkuk.gonggoose.common.dto.ChattingMessageDto;
-import konkuk.gonggoose.common.dto.ChattingMessageResponse;
-import konkuk.gonggoose.common.dto.ChattingRoomDetailResponse;
-import konkuk.gonggoose.common.dto.ChattingRoomListResponse;
+import konkuk.gonggoose.common.dto.*;
 import konkuk.gonggoose.common.response.BaseResponse;
 import konkuk.gonggoose.service.ChattingService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +14,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -51,5 +49,12 @@ public class ChattingController {
         BaseResponse<ChattingRoomDetailResponse> responseData = new BaseResponse<>(data);
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
-    
+
+    @PostMapping("/users/{userId}/bulletins/{bulletinId}/enter")
+    public ResponseEntity<BaseResponse<ChattingRoomTopicIdDto>> chattingRoomEnter(@PathVariable Long userId,
+                                                                                  @PathVariable Long bulletinId){
+        ChattingRoomTopicIdDto data = chattingService.enterChattingRoom(userId, bulletinId);
+        BaseResponse<ChattingRoomTopicIdDto> responseData = new BaseResponse<>(data);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
 }

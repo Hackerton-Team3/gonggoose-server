@@ -48,7 +48,13 @@ public class UserDao {
         return true;
     }
 
+    public String findNickNameById(Long id){
+        String sql = "select nickname from user where user_id = :id";
 
+        Map<String, Long> param = Map.of("id", id);
+
+        return jdbcTemplate.queryForObject(sql, param, String.class);
+    }
     public void updateImageUrl(PatchImageUrlRequest patchImageUrlRequest) {
         log.info("[UserDao.updateImageUrl]");
         String sql = "update user set image_url=:image_url where token=:token";

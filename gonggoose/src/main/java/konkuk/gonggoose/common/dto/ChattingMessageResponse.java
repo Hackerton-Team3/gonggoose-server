@@ -15,13 +15,16 @@ public class ChattingMessageResponse {
     private Long chattingMessageId;
     private Long chattingRoomId;
     private Long userId;
+    private String nickname;
     private String content;
     private LocalDateTime createAt;
 
-    public static ChattingMessageResponse create(ChattingMessage chattingMessage){
+    public static ChattingMessageResponse create(Long userId, String nickname, ChattingMessage chattingMessage){
         return ChattingMessageResponse.builder()
                 .chattingMessageId(chattingMessage.getId())
                 .chattingRoomId(chattingMessage.getChattingRoomId())
+                .userId(userId)
+                .nickname(nickname)
                 .content(chattingMessage.getContent())
                 .createAt(chattingMessage.getCreateAt())
                 .build();
