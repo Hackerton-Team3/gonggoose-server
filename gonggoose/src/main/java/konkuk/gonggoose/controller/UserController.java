@@ -4,6 +4,7 @@ import konkuk.gonggoose.common.response.BaseErrorResponse;
 import konkuk.gonggoose.common.response.BaseResponse;
 import konkuk.gonggoose.common.response.status.BaseExceptionResponseStatus;
 import konkuk.gonggoose.common.response.status.ResponseStatus;
+import konkuk.gonggoose.dto.BulletinResponse;
 import konkuk.gonggoose.dto.PatchImageUrlRequest;
 import konkuk.gonggoose.dto.SignupRequest;
 import konkuk.gonggoose.dto.SignupResponse;
@@ -28,8 +29,8 @@ public class UserController {
     public ResponseStatus isExistedUser(@PathVariable long kakaoId) {
         log.info("[UserController.isExistedUser]");
 
-        List<SignupResponse> findResult = userService.isExistedUser(kakaoId);
-        if (findResult != null) {
+        long findResult = userService.isExistedUser(kakaoId);
+        if (findResult != -1) {
             return new BaseResponse<>(findResult);
         }
         return new BaseErrorResponse(BaseExceptionResponseStatus.USER_NOT_FOUND, "사용자가 존재하지 않습니다.");
@@ -48,12 +49,17 @@ public class UserController {
 
     @PatchMapping("/{userId}/image")
     public BaseResponse<String> updateImageUrl(@RequestBody PatchImageUrlRequest patchImageUrlRequest, @PathVariable long userId) {
-        log.info("[UserController.updatePhoneNumber]");
+        log.info("[UserController.updateImageUrl]");
 
         userService.updateImageUrl(patchImageUrlRequest, userId);
 
         return new BaseResponse<>(null);
     }
 
-
+//    @GetMapping("/{userId}/bulletins")
+//    public BaseResponse<List<BulletinResponse>> getBulletinsByUserId(@PathVariable long userId) {
+//        log.info("[UserController.getBulletinsByUserId]");
+//
+//        return new BaseResponse<>(userService.getBulletinsByUserId(userId));
+//    }
 }

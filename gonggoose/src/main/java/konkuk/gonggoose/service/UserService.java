@@ -1,6 +1,7 @@
 package konkuk.gonggoose.service;
 
 import konkuk.gonggoose.dao.UserDao;
+import konkuk.gonggoose.dto.BulletinResponse;
 import konkuk.gonggoose.dto.PatchImageUrlRequest;
 import konkuk.gonggoose.dto.SignupRequest;
 import konkuk.gonggoose.dto.SignupResponse;
@@ -19,7 +20,7 @@ public class UserService {
 
     private final UserDao userDao;
 
-    public List<SignupResponse> isExistedUser(long kakaoId) {
+    public long isExistedUser(long kakaoId) {
         return userDao.isExistedUser(kakaoId);
     }
 
@@ -30,4 +31,8 @@ public class UserService {
     public void updateImageUrl(PatchImageUrlRequest patchImageUrlRequest, long userId) {
         userDao.updateImageUrl(patchImageUrlRequest, userId);
     }
+
+//    public List<BulletinResponse> getBulletinsByUserId(long userId) {
+//        return userDao.getBulletinsByUserId(userId);
+//    }
 }

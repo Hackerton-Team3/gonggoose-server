@@ -2,7 +2,6 @@ package konkuk.gonggoose.dao;
 
 import konkuk.gonggoose.dto.PatchImageUrlRequest;
 import konkuk.gonggoose.dto.SignupRequest;
-import konkuk.gonggoose.dto.SignupResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,8 +11,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -26,25 +23,24 @@ public class UserDao {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public List<SignupResponse> isExistedUser(long kakaoId) {
+    public long isExistedUser(long kakaoId) {
         log.info("[UserDao.isExistedUser]");
         String sql = "select exists(select kakao_id from user where kakao_id=:kakao_id)";
         Map<String, Object> param = Map.of("kakao_id", kakaoId);
 
         if (Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, param, boolean.class))) {
             sql = "select user_id from user where kakao_id=:kakao_id";
-            return jdbcTemplate.query(sql, param,
-                    (rs, rowNum) -> new SignupResponse(
-                            rs.getLong("user_id"))
-            );
+            return jdbcTemplate.queryForObject(sql, param, long.class);
         }
-        return null;
+        return -1;
     }
 
     public long signup(SignupRequest signupRequest) {
         log.info("[UserDao.signup]");
 
-        if (isExistedUser(Long.parseLong(signupRequest.getKakaoId())) == null) {
+        log.info("signupRequest.getKakaoId() : {}", signupRequest.getKakaoId());
+        log.info("isExistedUser() : {}", isExistedUser(Long.parseLong(signupRequest.getKakaoId())));
+        if (isExistedUser(Long.parseLong(signupRequest.getKakaoId())) != -1) {
             return -1;
         }
 
@@ -66,4 +62,20 @@ public class UserDao {
                 "user_id", userId);
         jdbcTemplate.update(sql, param);
     }
+
+//    public List<BulletinResponse> getBulletinsByUserId(long userId) {
+//        log.info("[UserDao.getBulletinsByUserId]");
+//        String sql = "SELECT \n" +
+//                "    b.title,\n" +
+//                "    b.max_user_number,\n" +
+//                "    b.status,\n" +
+//                "    COUNT(ub.user_id) AS participant_count\n" +
+//                "FROM \n" +
+//                "    bulletin b\n" +
+//                "LEFT JOIN \n" +
+//                "    user_bulletin ub ON b.bulletin_id = ub.bulletin_id\n" +
+//                "GROUP BY \n" +
+//                "    b.bulletin_id, b.title, b.max_user_number, b.status";
+//
+//    }
 }
