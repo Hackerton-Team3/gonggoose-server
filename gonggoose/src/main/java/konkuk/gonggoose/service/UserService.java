@@ -1,6 +1,7 @@
 package konkuk.gonggoose.service;
 
 import konkuk.gonggoose.dao.UserDao;
+import konkuk.gonggoose.dto.PatchImageUrlRequest;
 import konkuk.gonggoose.dto.SignupRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,5 +23,9 @@ public class UserService {
 
     public boolean signup(SignupRequest signupRequest) {
         return userDao.signup(signupRequest);
+    }
+
+    public void updateImageUrl(PatchImageUrlRequest patchImageUrlRequest) {
+        userDao.updateImageUrl(patchImageUrlRequest);
     }
 }
