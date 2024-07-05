@@ -20,10 +20,7 @@ public class UserService {
         return userDao.isExistedUser(kakaoId);
     }
 
-    public void signup(SignupRequest signupRequest) {
-        String createdAt = LocalDate.now().toString();
-        String updatedAt = "";
-
-        userDao.signup(signupRequest, createdAt, updatedAt);
+    public boolean signup(SignupRequest signupRequest) {
+        return userDao.signup(signupRequest);
     }
 }

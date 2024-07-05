@@ -43,7 +43,8 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     /**
      * 5000: User 오류
      */
-    USER_NOT_FOUND(5000, HttpStatus.BAD_REQUEST.value(), "존재하지 않는 회원입니다.");
+    USER_NOT_FOUND(5000, HttpStatus.BAD_REQUEST.value(), "존재하지 않는 회원입니다."),
+    DUPLICATE_KAKAO_ID(5001, HttpStatus.BAD_REQUEST.value(), "이미 존재하는 카카오 ID입니다.");
 
 
 

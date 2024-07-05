@@ -30,24 +30,20 @@ public class UserDao {
         return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, param, boolean.class));
     }
 
-    public long signup(SignupRequest signupRequest, String createdAt, String updatedAt) {
+    public boolean signup(SignupRequest signupRequest) {
         log.info("[UserDao.signup]");
 
-        String sql = "insert into user(kakao_id, nickname, image_url, school_name, school_email, token)" +
-                "values(:kakao_id, :nickname, :image_url, :school_name, :school_email, :token)";
+        if (isExistedUser(Long.parseLong(signupRequest.getKakaoId()))) {
+            return false;
+        }
 
+        String sql = "insert into user(kakao_id, nickname, image_url, school_name, school_email, token)" +
+                "values(:kakaoId, :nickname, :imageUrl, :schoolName, :schoolEmail, :accessToken)";
+
+        SqlParameterSource param = new BeanPropertySqlParameterSource(signupRequest);
         KeyHolder keyHolder = new GeneratedKeyHolder();
-//        SqlParameterSource param = new BeanPropertySqlParameterSource(signupRequest);
-        Map<String, Object> param = Map.of( "user_id", Objects.requireNonNull(keyHolder.getKey()).longValue(),
-                "kakao_id", signupRequest.getKakaoId(),
-                "nickname", signupRequest.getNickname(),
-                "image_url", signupRequest.getImageUrl(),
-                "school_name", signupRequest.getSchoolName(),
-                "school_email", signupRequest.getSchoolEmail(),
-                "token", signupRequest.getAccessToken(),
-                "created_at", createdAt,
-                "updated_at", updatedAt);
-        jdbcTemplate.update(sql, param);
-        return Objects.requireNonNull(keyHolder.getKey()).longValue();
+        jdbcTemplate.update(sql, param, keyHolder);
+
+        return true;
     }
 }
