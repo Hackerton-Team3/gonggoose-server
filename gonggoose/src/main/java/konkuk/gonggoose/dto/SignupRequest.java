@@ -13,5 +13,4 @@ public class SignupRequest {
     private String imageUrl;
     private String schoolName;
     private String schoolEmail;
-    private String accessToken;
 }

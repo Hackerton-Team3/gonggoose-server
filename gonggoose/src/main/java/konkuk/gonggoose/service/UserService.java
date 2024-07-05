@@ -21,7 +21,7 @@ public class UserService {
         return userDao.isExistedUser(kakaoId);
     }
 
-    public boolean signup(SignupRequest signupRequest) {
+    public long signup(SignupRequest signupRequest) {
         return userDao.signup(signupRequest);
     }
 
